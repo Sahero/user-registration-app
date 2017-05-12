@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 //import {MapsAPILoader} from '@agm/core';
 import {MapsAPILoader} from 'angular2-google-maps/core';
 import {IMyOptions, IMyDateModel} from 'ngx-mydatepicker';
+import {environment} from '../../../environments/environment';
 
 
 @Component({
@@ -62,6 +63,8 @@ export class RegisterComponent implements OnInit {
   @ViewChild("search")
   searchElementRef: ElementRef;
 
+  siteKey: String= "6LeLGiAUAAAAAAhZvV2PwJNMoaEO4_Dp4glBr8Jl";
+  
   constructor(private validateService: ValidateService, 
               private toastyService:ToastyService,
               private authService: AuthService,
@@ -71,6 +74,10 @@ export class RegisterComponent implements OnInit {
               ) { }
 
   ngOnInit() {
+    //set captcha 
+    if(environment.production){
+      this.siteKey = "6LdxGSEUAAAAAGOvcYqpnMTBDqw_6uRp0oiIZTgF";
+    }
     //set google maps defaults
     this.zoom = 4;
     this.latitude; //= 39.8282;
@@ -230,6 +237,7 @@ export class RegisterComponent implements OnInit {
   }
 
   resolved(captchaResponse: string) {
+    //console.log(captchaResponse);
        if(captchaResponse!=null){
           this.captcha= true;
        }

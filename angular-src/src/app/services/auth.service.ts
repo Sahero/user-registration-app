@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,8 @@ export class AuthService {
   activity: any;
 
   constructor(private http: Http) {
-    this.isDev = false; // Change to false before deployment
+    this.isDev = !environment.production;
+    console.log(this.isDev);
   }
 
   /* User */
@@ -139,7 +141,8 @@ export class AuthService {
   }
   /** Activity end */
   prepEndpoint(ep) {
-    if (this.isDev) {
+    
+    if (!this.isDev) {
       return ep;
     } else {
       return 'http://localhost:8080/' + ep;

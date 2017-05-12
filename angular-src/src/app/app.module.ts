@@ -58,7 +58,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ToastyModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey:'AIzaSyBkCp6V_l9OAD9d9JpCilthH45iegInf9k',//'AIzaSyDAt8osXcV3cdpV-vaJlNLc9IvERjLxA30',// 'AIzaSyCj3EHHwE9zd5q11vyRM99o0v7LDy4gTVc',
+      apiKey:'AIzaSyBUJiV-tOVcZI6DtOMCZf35_k2wgyayTtI',//'AIzaSyDAt8osXcV3cdpV-vaJlNLc9IvERjLxA30',// 'AIzaSyCj3EHHwE9zd5q11vyRM99o0v7LDy4gTVc',
       libraries: ['places']
 
     }),

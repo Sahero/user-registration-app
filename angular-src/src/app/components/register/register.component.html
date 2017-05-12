@@ -92,7 +92,7 @@
                 <div class="form-group">
                   <label class="col-lg-2 control-label">Captcha</label>
                   <div class="col-lg-10">
-                    <recaptcha (resolved)="resolved($event)" required siteKey="6LeLGiAUAAAAAAhZvV2PwJNMoaEO4_Dp4glBr8Jl"></recaptcha>
+                    <recaptcha (resolved)="resolved($event)" required [siteKey]="siteKey"></recaptcha>
                   </div>
                 </div>
                 <div class="form-group">
