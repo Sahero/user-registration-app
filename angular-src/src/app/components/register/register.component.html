@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">Register</h3>
+        </div>
+        <div class="panel-body">
+          <div class="well bs-component">
+            <form (submit)="onRegisterSubmit()" class="form-horizontal" (keydown.enter)="$event.preventDefault()">
+                           
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">First name</label>
+                  <div class="col-lg-10">
+                    <input type="text" [(ngModel)]="firstName" name="firstName" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Middle name</label>
+                  <div class="col-lg-10">
+                    <input type="text" [(ngModel)]="middleName" name="middleName" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Last name</label>
+                  <div class="col-lg-10">
+                    <input type="text" [(ngModel)]="lastName" name="lastName" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Gender</label>
+
+                  <div class="col-lg-10">
+                    <label *ngFor="let g of genders" class="radio-inline">
+            <input type="radio" name="gender" [(ngModel)]="gender" 
+              [value]="g.value">
+              {{g.display}}
+          </label>
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Birthdate</label>
+                  <div class="col-lg-10">
+                    <!--<input type="text" [(ngModel)]="birthdate" name="birthdate" class="form-control">-->
+                    <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="dateModel"
+                      [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" autocomplete="off"
+                      readonly (click)="dp.toggleCalendar()" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Username</label>
+                  <div class="col-lg-10">
+                    <input type="text" [(ngModel)]="username" name="username" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Email</label>
+                  <div class="col-lg-10">
+                    <input type="text" [(ngModel)]="email" name="email" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Password</label>
+                  <div class="col-lg-10">
+                    <input type="password" [(ngModel)]="password" name="password" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Confirm Password</label>
+                  <div class="col-lg-10">
+                    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <!-- this creates a google map on the page with the given lat/lng from -->
+                  <!-- the component as the initial center of the map: -->
+                  <label class="col-lg-2 control-label">Address</label>
+                  <div class="col-lg-10">
+                    <input placeholder="Search" type="text" class="form-control" [(ngModel)]="addressFull" name="addressFull" value="addressFull"
+                      #search [formControl]="searchControl">
+                  </div>
+                  <label class="col-lg-2 control-label"></label>
+                  <div class="col-lg-10">
+                    <sebm-google-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                      <sebm-google-map-marker [latitude]="latitude" [longitude]="longitude"></sebm-google-map-marker>
+                    </sebm-google-map>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 control-label">Captcha</label>
+                  <div class="col-lg-10">
+                    <recaptcha (resolved)="resolved($event)" required siteKey="6LeLGiAUAAAAAAhZvV2PwJNMoaEO4_Dp4glBr8Jl"></recaptcha>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+            
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

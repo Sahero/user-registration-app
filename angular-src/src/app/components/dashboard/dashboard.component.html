@@ -1,0 +1,20 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Your Activities</h3>
+    </div>
+    <div class="panel-body">
+        <div class="column is-one-third">
+
+        </div>
+        <div class="well well-sm" 
+            *ngFor="let a of activities 
+                    | paginate: { id:'activity', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: total}
+                    ; let i=index">
+            {{(itemsPerPage * (currentPage - 1)) + (i+1)}}. {{a.log}}, {{a.timestamp}}
+
+        </div>
+        <div class="text-center">
+            <pagination-controls [maxSize]="maxSize" (pageChange)="getData($event)" id="activity"></pagination-controls>
+        </div>
+    </div>
+</div>
