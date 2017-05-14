@@ -1,20 +1,33 @@
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Your Activities</h3>
-    </div>
-    <div class="panel-body">
-        <div class="column is-one-third">
-
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Your Activities</h3>
         </div>
-        <div class="well well-sm" 
-            *ngFor="let a of activities 
+        <div class="panel-body">
+            <!--<div class="well well-sm" *ngFor="let a of activities 
                     | paginate: { id:'activity', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: total}
                     ; let i=index">
-            {{(itemsPerPage * (currentPage - 1)) + (i+1)}}. {{a.log}}, {{a.timestamp}}
+                {{(itemsPerPage * (currentPage - 1)) + (i+1)}}. {{a.log}}, {{a.timestamp}}
 
-        </div>
-        <div class="text-center">
-            <pagination-controls [maxSize]="maxSize" (pageChange)="getData($event)" id="activity"></pagination-controls>
+            </div>-->
+                <ngx-datatable
+                    [rows]="rows"
+                    [columns]="columns"
+                    [columnMode]="'force'"
+                    [footerHeight]="50"
+                    [rowHeight]="'auto'"
+                    [externalPaging]="true"
+                    [count]="page.totalElements"
+                    [offset]="page.pageNumber"
+                    [limit]="page.size"
+                    [cssClasses]='customClasses'
+                    (page)='setPage($event)'>
+                </ngx-datatable>
+            <!--<div class="text-center">
+                <pagination-controls [maxSize]="maxSize" (pageChange)="getData($event)" id="activity"></pagination-controls>
+            </div>-->
         </div>
     </div>
+
+
 </div>

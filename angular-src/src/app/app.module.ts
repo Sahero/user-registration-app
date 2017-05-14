@@ -30,6 +30,7 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 /*Pagination */
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 const appRoutes: Routes = [
   {path:'home',  component: HomeComponent, canActivate:[AuthGuard]},
@@ -66,7 +67,8 @@ const appRoutes: Routes = [
     NgxMyDatePickerModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
-    NgxPaginationModule        
+    NgxPaginationModule,
+    NgxDatatableModule        
   ],
   providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent],

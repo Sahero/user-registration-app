@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const Activity = require('../models/activity');
-
+//import {PagedData} from "../angular-src/src/app/model/paged-data";
 //Append activity
 router.post('/add', (req, res, next) => {
     let newActivity = new Activity({
@@ -48,7 +48,7 @@ router.get('/getbypagenum', passport.authenticate('jwt', { session: false })
         //let pagenum = 2;
 
         //const perPage = 5;
-        let start = (pagenum - 1) * perPage;
+        let start = (pagenum) * perPage;
         let end = start + perPage;
 
         Activity.find({ userId: req.user._id })

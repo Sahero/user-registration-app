@@ -103,7 +103,7 @@ router.get('/getbypagenum', passport.authenticate('jwt', { session: false })
         let pagenum = parseInt(req.headers.pagenum);
         let perPage = parseInt(req.headers.itemsperpage);
         //const perPage = 5;
-        let start = (pagenum - 1) * perPage;
+        let start = (pagenum) * perPage;
         let end = start + perPage;
 
         User.find()

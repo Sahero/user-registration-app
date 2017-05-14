@@ -1,43 +1,80 @@
-<div class="jumbotron text-center">
-  <h2>List of all registered users</h2>
+<div class="container">
+  <div class="jumbotron text-center">
+    <h2>List of all registered users</h2>
+  </div>
+  <div class="table-responsive">
+    <ngx-datatable class="striped" [rows]="rows" [scrollbarH]="true" [columnMode]="'force'" [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements"
+      [offset]="page.pageNumber" [limit]="page.size" [cssClasses]='customClasses' (page)='setPage($event)'>
+      <ngx-datatable-column>
+        <ng-template ngx-datatable-header-template>Name</ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <i [innerHTML]="row['firstName']"></i> <i [innerHTML]="row['middleName']"></i> <i [innerHTML]="row['lastName']"></i>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Username">
+        <!--<ng-template ngx-datatable-header-template>Username</ng-template>-->
+        <ng-template let-value="value" ngx-datatable-cell-template>{{value}}</ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Email">
+        <!--<ng-template ngx-datatable-header-template>Username</ng-template>-->
+        <ng-template let-value="value" ngx-datatable-cell-template>{{value}}</ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="birthdate">
+        <ng-template ngx-datatable-header-template>Date of Birth</ng-template>
+        <ng-template let-value="value" ngx-datatable-cell-template>{{value}}</ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Gender">
+        <ng-template let-value="value" ngx-datatable-cell-template>{{value}}</ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="address">
+        <ng-template ngx-datatable-header-template>Address</ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <i [innerHTML]="row['address']['streetAddress']"></i>,
+          <i [innerHTML]="row['address']['city']"></i>,
+          <i [innerHTML]="row['address']['state']"></i>
+          <i [innerHTML]="row['address']['postalCod']"></i>,
+          <i [innerHTML]="row['address']['country']"></i>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+    <!-- <table class="table table-striped table-hover ">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Date of Birth</th>
+          <th>Gender</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | paginate: { id:'user', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: total}; let i=index"
+          class="{{(i%2)?'info':''}}">
+          <td>{{(itemsPerPage * (currentPage - 1)) + (i+1)}}.</td>
+          <td>{{user.firstName}} {{user.middleName}} {{user.lastName}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.birthdate}}</td>
+          <td>{{user.gender}}</td>
+          <td>
+            <a target="_blank" href="https://www.google.com.au/maps/@{{user.address.latitude}},{{user.address.longitude}},15z">
+              
+              {{user.address.streetAddress}}, {{user.address.city}}, {{user.address.state}} {{user.address.postalCode}}, {{user.address.country}}
+            </a>
+          </td>
+        </tr>
+        <tr class="text-center">
+          <td colspan="7">
+            <div>
+              <pagination-controls [maxSize]="maxSize" (pageChange)="getData($event)" id="user"></pagination-controls>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>-->
+  </div>
 </div>
-
-<table class="table table-striped table-hover ">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Date of Birth</th>
-      <th>Gender</th>
-      <th>Address</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users | paginate: { id:'user', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: total}; let i=index"
-      class="{{(i%2)?'info':''}}">
-      <td>{{(itemsPerPage * (currentPage - 1)) + (i+1)}}.</td>
-      <td>{{user.firstName}} {{user.middleName}} {{user.lastName}}</td>
-      <td>{{user.username}}</td>
-      <td>{{user.email}}</td>
-      <td>{{user.birthdate}}</td>
-      <td>{{user.gender}}</td>
-      <td>
-        <a target="_blank" href="https://www.google.com.au/maps/@{{user.address.latitude}},{{user.address.longitude}},15z">
-          <!--"onClick(user.address.latitude,user.address.longitude)"-->
-          {{user.address.streetAddress}}, {{user.address.city}}, {{user.address.state}} {{user.address.postalCode}}, {{user.address.country}}
-        </a>
-      </td>
-    </tr>
-    <tr class="text-center">
-      <td colspan="7">
-        <div>
-          <pagination-controls [maxSize]="maxSize" (pageChange)="getData($event)" id="user"></pagination-controls>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 <!--<button (click)="onClick()">Alert</button>-->
