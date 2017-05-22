@@ -33,13 +33,14 @@ export class AuthService {
       .map(res => res.json());
   }
 
-  getProfile() {
+  getProfile(username) {
+    //let params = new
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
     let ep = this.prepEndpoint('users/profile');
-    return this.http.get(ep, { headers: headers })
+    return this.http.get(ep, { headers: headers ,params: {username: username}},)
       .map(res => res.json());
   }
 
@@ -81,6 +82,14 @@ export class AuthService {
     this.authToken = token;
     this.user = user;
   }
+
+  getUserData(){
+    if(this.loggedIn() && this.user==null){
+      this.user = JSON.parse(localStorage.getItem("user"));
+    }
+    return this.user ;
+  }
+  
 
   loadToken() {
     const token = localStorage.getItem('id_token');

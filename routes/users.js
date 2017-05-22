@@ -68,7 +68,16 @@ router.post('/authenticate', (req, res, next) => {
 
 //Profile
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-  res.json(req.user);
+  //res.json(req.user);
+  //res.json(req.query.name);
+  User.findOne({username: req.query.username}, function (err, user) { 
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(user);
+            }
+  });
+
 });
 
 //Home

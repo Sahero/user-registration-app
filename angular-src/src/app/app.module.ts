@@ -38,7 +38,7 @@ const appRoutes: Routes = [
   {path:'',  component: LoginComponent},
   {path:'login',  component: LoginComponent},
   {path:'dashboard',  component: DashboardComponent, canActivate:[AuthGuard]},
-  {path:'profile',  component: ProfileComponent, canActivate:[AuthGuard]}
+  {path:'profile/:username',  component: ProfileComponent, canActivate:[AuthGuard]}
 ]
 
 @NgModule({
