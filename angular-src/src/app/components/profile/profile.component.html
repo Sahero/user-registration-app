@@ -9,10 +9,18 @@
         </div>
         <div class="panel-body">
           <div class="row">
-            <div class="col-md-3 col-lg-3 " align="center">
-              <img alt="User Pic" *ngIf="user.gender=='M'" src="../../../assets/img/user_profile_male.jpg" class="img-circle img-responsive"> 
-              <img alt="User Pic" *ngIf="user.gender=='F'" src="../../../assets/img/user_profile_female.jpg" class="img-circle img-responsive"> 
+            <div class="col-md-3 col-lg-3 " *ngIf="user.image==null;else userImage" align="center">
+              <img alt="User Pic" *ngIf="user.gender=='M'" src="../../../assets/img/user_profile_male.jpg" class="img-circle img-responsive">
+              <img alt="User Pic" *ngIf="user.gender=='F'" src="../../../assets/img/user_profile_female.jpg" class="img-circle img-responsive">
+              <img alt="User Pic" *ngIf="user.gender=='O'" src="../../../assets/img/user-default.png" class="img-circle img-responsive">
             </div>
+
+            <ng-template #userImage>
+              <div class="col-md-3 col-lg-3 " align="center">
+                <img alt="User Pic" [src]="user.image" class="img-circle img-responsive">
+              </div>
+            </ng-template>
+
             <div class=" col-md-9 col-lg-9 ">
               <table class="table table-user-information">
                 <tbody>
@@ -32,7 +40,7 @@
                     <td>Gender:</td>
                     <td>{{user.gender}}</td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="user.address!=null">
                     <td>Address:</td>
                     <td>
 
@@ -40,7 +48,7 @@
 
                     </td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="user.address!=null">
                     <td colspan="2">
                       <sebm-google-map [latitude]="user.address.latitude" [longitude]="user.address.longitude" [scrollwheel]="false" [zoom]="14">
                         <sebm-google-map-marker [latitude]="user.address.latitude" [longitude]="user.address.longitude"></sebm-google-map-marker>

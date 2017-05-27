@@ -7,12 +7,12 @@ const uniqueValidator = require('mongoose-unique-validator');
 const UserSchema = mongoose.Schema({
     firstName: {type: String, required: true},
 		middleName: {type: String},
-		lastName: {type: String, required: true},
-    gender: {type: String, required: true},
+		lastName: {type: String},
+    gender: {type: String},
     username:{type: String, required: true, unique:true, dropDups: true},
-		email: {type: String, required: true, unique:true, dropDups: true},
+		email: {type: String, required: true},
 		password: {type: String, required: true},
-		birthdate: {type: String, required: true},
+		birthdate: {type: String},
 		address: { streetAddress: {type: String},
                     city: {type: String},
                     state: {type: String},
@@ -21,8 +21,10 @@ const UserSchema = mongoose.Schema({
                     latitude: {type: Number},
                     longitude:{type: Number}
               },
-		admin: {type: Boolean}
-	
+		admin: {type: Boolean},
+    provider: {type: String},
+    image: {type: String}
+    
 });
 
 UserSchema.plugin(uniqueValidator);

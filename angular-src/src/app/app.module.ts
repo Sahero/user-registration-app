@@ -32,6 +32,23 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+//import { Angular2SocialLoginModule } from "angular2-social-login";
+import { Angular2SocialLoginModule } from "./angular2-social-login.module";
+import { SocialAuthService } from "./services/social.auth.service";
+
+let providers = {
+    "google": {
+      "clientId": "884222389193-vvpnfknktp6ddni2govdhv6f4voqbpmn.apps.googleusercontent.com"
+    },
+    // "linkedin": {
+    //   "clientId": "LINKEDIN_CLIENT_ID"
+    // },
+    "facebook": {
+      "clientId": "1317824631588223",
+      "apiVersion": "v2.9" //like v2.4 
+    }
+  };
+
 const appRoutes: Routes = [
   {path:'home',  component: HomeComponent, canActivate:[AuthGuard]},
   {path:'register',  component: RegisterComponent},
@@ -68,10 +85,14 @@ const appRoutes: Routes = [
     ModalModule.forRoot(),
     BootstrapModalModule,
     NgxPaginationModule,
-    NgxDatatableModule        
+    NgxDatatableModule,
+    Angular2SocialLoginModule        
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, AuthGuard, SocialAuthService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }
+
+Angular2SocialLoginModule.loadProvidersScripts(providers);
+

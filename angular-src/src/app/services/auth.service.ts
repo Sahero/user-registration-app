@@ -33,6 +33,15 @@ export class AuthService {
       .map(res => res.json());
   }
 
+
+  authenticateSocialUser(user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let ep = this.prepEndpoint('users/socialAuthenticate');
+    return this.http.post(ep, user, { headers: headers })
+      .map(res => res.json());
+  }
+
   getProfile(username) {
     //let params = new
     let headers = new Headers();
@@ -74,7 +83,7 @@ export class AuthService {
     return this.http.get(ep, { headers: headers })
       .map(res => res.json());
   }
-
+ 
   storeUserData(token, user) {
     //console.log(user);
     localStorage.setItem('id_token', token);
@@ -97,23 +106,34 @@ export class AuthService {
   }
 
   loggedIn() {
+    return tokenNotExpired('id_token');
     //console.log(localStorage.getItem('user'));
     //if(localStorage.getItem('id_token'))
-    return tokenNotExpired('id_token');
+    //console.log(localStorage);
+    //console.log(tokenNotExpired('id_token'));
+    /*var loginProvider = localStorage.getItem('_login_provider');
+    //console.log(loginProvider);
+    if(loginProvider == null){
+      return tokenNotExpired('id_token');
+    }
+    else if(loginProvider.toLowerCase()==='facebook' || loginProvider.toLowerCase()==='google'){
+      return true;
+    }
+    else{
+      return false;
+    }*/
+    
   }
 
   logout() {
-    console.log(this.user);
-    let userid = this.user.id;
+    this.addActivity({ userId: this.user.id, log: 'Successfully logged out.', status: 'success' }).subscribe(data => {
+
+    });
     this.authToken = null;
     this.user = null;
     localStorage.removeItem('id_token');
     localStorage.removeItem('user');
-    localStorage.clear();
-    this.addActivity({ userId: userid, log: 'Successfully logged out.', status: 'success' }).subscribe(data => {
-    
-     });
-    
+    localStorage.clear();    
   }
   /**User end */
 
@@ -157,4 +177,15 @@ export class AuthService {
       return 'http://localhost:8080/' + ep;
     }
   }
+
+  // authenticateFB() {
+  //   console.log('1');
+  //   let headers = new Headers();
+  //   headers.append('Content-Type', 'multipart/form-data');
+  //   headers.append('Access-Control-Allow-Origin', '*');
+  //   let ep = this.prepEndpoint('auth/facebook');
+  //   return this.http.get(ep, {headers: headers})
+  //     .map(res => res.json());
+
+  // }
 }

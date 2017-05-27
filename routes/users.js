@@ -52,7 +52,7 @@ router.post('/authenticate', (req, res, next) => {
           token: 'JWT ' + token,
           user: {
             id: user._id,
-            name: user.firstName +" "+ user.lastName,
+            name: user.firstName + " " + user.lastName,
             username: user.username,
             email: user.email
           }
@@ -60,9 +60,78 @@ router.post('/authenticate', (req, res, next) => {
         });
       }
       else {
-        return res.json({ sucess: false, msg: "wrong password" });
+        return res.json({ sucess: false, msg: "Wrong username or password " });
       }
     });
+  });
+});
+
+//Authenticate
+router.post('/socialAuthenticate', (req, res, next) => {
+
+  const id = req.body.id;
+  const name = req.body.name;
+  const provider = req.body.provider;
+  const email = req.body.email;
+  const image = req.body.image;
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const gender = req.body.gender;
+  
+  // var user = {
+  //   id: d.uid,
+  //   name: d.name, 
+  //   username: d.provider,
+  //   email: d.email,
+  //   image: d.image
+  // }
+
+  User.getUserByUsername(id, (err, user) => {
+    if (err) throw err;
+    if (!user) {
+      let newUser = new User({
+        firstName: firstName,
+        middleName: '',
+        lastName: lastName,
+        gender: gender,
+        username: id,
+        email: email,
+        password: id,
+        birthdate: '',
+        address: '',
+        image: image,
+        provider: provider,
+        admin: false
+      });
+
+      User.addUser(newUser, (err, user) => {
+        /*if (err) {
+          res.json({ success: false, msg: 'Failed to register user ' + err });
+        }
+        else {
+          res.json({ success: true, msg: 'User registered' });
+        }*/
+      });
+      //return res.json({ success: false, msg: "User not found" });
+    }
+    else
+    {
+       const token = jwt.sign(user, config.secret, {
+          expiresIn: 604800 //in secs 1 week
+        });
+
+        res.json({
+          success: true,
+          token: 'JWT ' + token,
+          user: {
+            id: user._id,
+            name: user.firstName + " " + user.lastName,
+            username: user.username,
+            email: user.email
+          }
+
+        });
+    }
   });
 });
 
@@ -70,12 +139,12 @@ router.post('/authenticate', (req, res, next) => {
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
   //res.json(req.user);
   //res.json(req.query.name);
-  User.findOne({username: req.query.username}, function (err, user) { 
-            if (err) {
-                res.json(err);
-            } else {
-                res.json(user);
-            }
+  User.findOne({ username: req.query.username }, function (err, user) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(user);
+    }
   });
 
 });
@@ -94,43 +163,39 @@ router.get('/', (req, res, next) => {
 
 router.get('/getcount', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
-    User.find()
-        .count()
-        .exec(function (err, users) {
-            if (err) {
-                res.json(err);
-            } else {
-                res.json(users);
-            }
-        });
+  User.find()
+    .count()
+    .exec(function (err, users) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(users);
+      }
+    });
 
 });
 
 router.get('/getbypagenum', passport.authenticate('jwt', { session: false })
-    , (req, res, next) => {
-        
-        let pagenum = parseInt(req.headers.pagenum);
-        let perPage = parseInt(req.headers.itemsperpage);
-        //const perPage = 5;
-        let start = (pagenum) * perPage;
-        let end = start + perPage;
+  , (req, res, next) => {
 
-        User.find()
-            .sort({_id: -1 })
-            .skip(start)
-            .limit(end - start)
-            .exec(function (err, users) {
-                if (err) {
-                    res.json(err);
-                } else {
-                    res.json(users);
-                }
-            });
+    let pagenum = parseInt(req.headers.pagenum);
+    let perPage = parseInt(req.headers.itemsperpage);
+    //const perPage = 5;
+    let start = (pagenum) * perPage;
+    let end = start + perPage;
 
-});
+    User.find()
+      .sort({ _id: -1 })
+      .skip(start)
+      .limit(end - start)
+      .exec(function (err, users) {
+        if (err) {
+          res.json(err);
+        } else {
+          res.json(users);
+        }
+      });
 
-//Validate
-//router.get('/validate',(req, res, next) =>{
-//res.send('Validate');
-//});
+  });
+
 module.exports = router;
